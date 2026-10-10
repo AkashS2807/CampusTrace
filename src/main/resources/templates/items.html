@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="page-wrapper">
+    <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+    <div th:if="${success}" class="alert alert-success" role="status" th:text="${success}"></div>
+    <div class="page-header">
+        <h1 th:text="${pageTitle} ?: 'Campus Items'">Campus Items</h1>
+        <p th:if="${keyword}">Showing results for "<span th:text="${keyword}"></span>"</p>
+        <p th:unless="${keyword}">Browse, search, and filter lost &amp; found listings</p>
+    </div>
+
+    <div class="toolbar">
+        <form th:action="@{${listPath}}" method="get">
+            <input aria-label="Search listings" type="text" name="keyword" maxlength="100" placeholder="Search name or description..." th:value="${keyword}">
+            <select aria-label="Item type" name="type">
+                <option value="">All Types</option>
+                <option value="LOST" th:selected="${selectedType == 'LOST'}">Lost</option>
+                <option value="FOUND" th:selected="${selectedType == 'FOUND'}">Found</option>
+            </select>
+            <select aria-label="Item status" name="status">
+                <option value="">All Statuses</option>
+                <option value="OPEN" th:selected="${selectedStatus == 'OPEN'}">Open</option>
+                <option value="RESOLVED" th:selected="${selectedStatus == 'RESOLVED'}">Resolved</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Search / Filter</button>
+            <a th:href="@{${listPath}}" class="btn btn-secondary">Clear</a>
+        </form>
+    </div>
+
+    <div th:if="${#lists.isEmpty(items)}" class="card empty-state">
+        <div class="empty-state-icon">📭</div>
+        <h3>No items found</h3>
+        <p>Try adjusting your search or filters, or report a new item from the dashboard.</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(items)}" class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Posted By</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.description}"></td>
+                    <td>
+                        <span th:class="${item.type == 'LOST'} ? 'badge badge-lost' : 'badge badge-found'"
+                              th:text="${item.type}"></span>
+                    </td>
+                    <td>
+                        <span th:class="${item.status == 'OPEN'} ? 'badge badge-open' : 'badge badge-resolved'"
+                              th:text="${item.status ?: 'OPEN'}"></span>
+                    </td>
+                    <td th:text="${item.location ?: '—'}"></td>
+                    <td th:text="${item.postedByName ?: item.postedBy}"></td>
+                    <td th:text="${item.contactNumber}"></td>
+                    <td>
+                        <div class="table-actions" th:if="${item.status == 'OPEN' or item.status == null}">
+                            <form th:if="${item.postedBy == userEmail or admin}" th:action="@{/resolve/{id}(id=${item.id})}" method="post"><button type="submit" class="btn btn-success">Resolve</button></form>
+                        </div>
+                        <span th:if="${item.status == 'RESOLVED'}" style="color:var(--text-muted); font-size:0.8125rem;">Done</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('User Login')}"></head>
+<body>
+
+<div class="page-wrapper">
+    <a href="/role" class="back-link">← Back</a>
+
+    <div class="card card-narrow card-center">
+        <div class="page-header">
+            <h1>Student Login</h1>
+            <p>Sign in or create a new account</p>
+        </div>
+
+        <div class="role-grid">
+            <a href="/registeredUser" class="role-card">
+                <span class="role-card-icon">🔑</span>
+                <h3>Sign In</h3>
+                <p>Already registered? Log in here</p>
+            </a>
+            <a href="/newUser" class="role-card">
+                <span class="role-card-icon">📝</span>
+                <h3>Register</h3>
+                <p>Create a new student account</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

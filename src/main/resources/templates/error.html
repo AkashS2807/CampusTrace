@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Request Unavailable')}"></head>
+<body>
+<div class="page-wrapper">
+    <div class="card card-narrow">
+        <div class="page-header">
+            <h1 th:text="${status == 404} ? 'Item or page not found' : (${status == 403} ? 'Access denied' : 'Request unavailable')">Request unavailable</h1>
+            <p th:if="${status == 404}">This item or page may no longer exist.</p>
+            <p th:if="${status == 403}">You do not have permission for this action. If your form expired, reload the page and try again.</p>
+            <p th:unless="${status == 404 or status == 403}">Check your request or try again later.</p>
+        </div>
+        <a th:href="@{/dashboard}" class="btn btn-primary">Dashboard</a>
+        <a th:href="@{/}" class="btn btn-secondary">Home</a>
+    </div>
+</div>
+</body>
+</html>

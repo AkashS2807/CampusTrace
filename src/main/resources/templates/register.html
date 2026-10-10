@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Register')}"></head>
+<body>
+
+<div class="page-wrapper">
+    <a href="/userChoice" class="back-link">← Back</a>
+
+    <div class="card card-narrow">
+        <div class="page-header">
+            <h1>Create Account</h1>
+            <p>Multiple students can share the same name — use your unique email to sign in</p>
+        </div>
+
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <form th:action="@{/saveUser}" method="post">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" maxlength="100" th:value="${form.fullName}" placeholder="e.g. Demo Student" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email (unique login)</label>
+                <input type="email" id="email" name="email" maxlength="254" th:value="${form.email}" placeholder="e.g. student@example.test" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" minlength="8" maxlength="72" autocomplete="new-password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="text" id="contactNumber" name="contactNumber" maxlength="25" th:value="${form.contactNumber}" placeholder="Phone number for contact" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

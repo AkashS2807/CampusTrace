@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin Login')}"></head>
+<body>
+
+<div class="page-wrapper">
+    <a href="/role" class="back-link">← Back</a>
+
+    <div class="card card-narrow">
+        <div class="page-header">
+            <h1>Admin Login</h1>
+            <p>Sign in to manage the portal</p>
+        </div>
+
+        <p>Use your configured administrator account. Access is determined by your account role.</p>
+
+        <form th:action="@{/userLogin}" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Administrator email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

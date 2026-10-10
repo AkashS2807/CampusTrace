@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Items')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="page-wrapper">
+    <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+    <div th:if="${success}" class="alert alert-success" role="status" th:text="${success}"></div>
+    <div class="page-header">
+        <h1>Manage Items</h1>
+        <p>Admin panel — review, resolve, or remove listings</p>
+    </div>
+
+    <div th:if="${#lists.isEmpty(items)}" class="card empty-state">
+        <div class="empty-state-icon">📭</div>
+        <h3>No items to manage</h3>
+        <p>Items will appear here once students start posting.</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(items)}" class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Posted By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.description}"></td>
+                    <td>
+                        <span th:class="${item.type == 'LOST'} ? 'badge badge-lost' : 'badge badge-found'"
+                              th:text="${item.type}"></span>
+                    </td>
+                    <td>
+                        <span th:class="${item.status == 'OPEN'} ? 'badge badge-open' : 'badge badge-resolved'"
+                              th:text="${item.status ?: 'OPEN'}"></span>
+                    </td>
+                    <td th:text="${item.postedByName ?: item.postedBy}"></td>
+                    <td>
+                        <div class="table-actions">
+                            <form th:if="${item.status == 'OPEN' or item.status == null}" th:action="@{/resolve/{id}(id=${item.id})}" method="post"><button type="submit" class="btn btn-success">Resolve</button></form>
+                            <form th:action="@{/deleteItem/{id}(id=${item.id})}" method="post" onsubmit="return confirm('Delete this item permanently?')"><button type="submit" class="btn btn-danger">Delete</button></form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

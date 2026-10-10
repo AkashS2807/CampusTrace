@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Report Found Item')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="page-wrapper">
+    <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+    <div class="card card-narrow">
+        <div class="page-header">
+            <h1>Report Found Item</h1>
+            <p>Help reunite someone with their belongings</p>
+        </div>
+
+        <div th:if="${error}" class="alert alert-error" role="alert" th:text="${error}"></div>
+
+        <form th:action="@{/saveFoundItem}" method="post">
+            <div class="form-group">
+                <label for="itemName">Item Name</label>
+                <input type="text" id="itemName" name="itemName" maxlength="100" th:value="${form.itemName}" placeholder="e.g. Student ID Card" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" maxlength="255" th:text="${form.description}" placeholder="Describe the item you found..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="location">Found Location</label>
+                <input type="text" id="location" name="location" maxlength="150" th:value="${form.location}" placeholder="Where did you find it?">
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="text" id="contactNumber" name="contactNumber" maxlength="25" th:value="${form.contactNumber}" placeholder="Phone number to reach you" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Submit Found Report</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

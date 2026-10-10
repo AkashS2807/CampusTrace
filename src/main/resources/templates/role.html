@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Select Role')}"></head>
+<body>
+
+<div class="page-wrapper">
+    <a href="/" class="back-link">← Back to Home</a>
+
+    <div class="card card-narrow card-center">
+        <div class="page-header">
+            <h1>Welcome</h1>
+            <p>Choose how you'd like to sign in</p>
+        </div>
+
+        <div class="role-grid">
+            <a href="/admin" class="role-card">
+                <span class="role-card-icon">🛡️</span>
+                <h3>Admin</h3>
+                <p>Manage listings and view registered users</p>
+            </a>
+            <a href="/userChoice" class="role-card">
+                <span class="role-card-icon">🎓</span>
+                <h3>Student</h3>
+                <p>Report lost or found items on campus</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

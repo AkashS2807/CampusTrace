@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Welcome, <span th:text="${name}">User</span></h1>
+        <p>Manage lost &amp; found items across campus</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Items</div>
+            <div class="stat-value" th:text="${totalItems}">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Open Items</div>
+            <div class="stat-value" th:text="${openItems}">0</div>
+        </div>
+    </div>
+
+    <p class="section-title">Quick Actions</p>
+    <div class="action-grid">
+        <a th:href="@{/lostItem}" class="action-card">
+            <span class="action-card-icon lost">📢</span>
+            <h3>Report Lost</h3>
+            <p>Post an item you've lost on campus</p>
+        </a>
+        <a th:href="@{/foundItem}" class="action-card">
+            <span class="action-card-icon found">✅</span>
+            <h3>Report Found</h3>
+            <p>Share an item you've found</p>
+        </a>
+        <a href="/items" class="action-card">
+            <span class="action-card-icon browse">📋</span>
+            <h3>Browse All</h3>
+            <p>Search and filter all listings</p>
+        </a>
+        <a href="/myPosts" class="action-card" th:unless="${admin}">
+            <span class="action-card-icon posts">📌</span>
+            <h3>My Items</h3>
+            <p>View and manage your listings</p>
+        </a>
+    </div>
+
+    <div th:if="${admin}" class="admin-section">
+        <p class="section-title">Admin Controls</p>
+        <div class="action-grid">
+            <a href="/manageItems" class="action-card">
+                <span class="action-card-icon admin">🗂️</span>
+                <h3>Manage Items</h3>
+                <p>Review, resolve, or delete listings</p>
+            </a>
+            <a href="/allUsers" class="action-card">
+                <span class="action-card-icon admin">👥</span>
+                <h3>View Users</h3>
+                <p>See all registered students</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
